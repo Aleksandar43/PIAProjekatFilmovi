@@ -2,24 +2,86 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Sajt sa filmovima</title>
+
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form id="prijavaMeni">
+
+            <h:panelGrid columns="3">
+                Korisničko ime: <p:inputText value="#{korisnikKontroler.korisnickoImePrijava}" required="true" requiredMessage="Korisničko ime nije popunjeno" id="korisničko_ime"/>
+                <p:message for="korisničko_ime" id="poruka_k"/>
+                Lozinka: <p:password value="#{korisnikKontroler.lozinkaPrijava}" required="true" requiredMessage="Lozinka nije popunjena" id="lozinka"/>
+                <p:message for="lozinka" id="poruka_l"/>
+                <p:row>
+                    <p:column colspan="3">
+                        <p:commandButton update="poruka_k poruka_l" value="Prijava" actionListener="#{korisnikKontroler.prijava}" action="#{korisnikKontroler.login()}" oncomplete="handleLoginRequest(xhr, status, args)" id="prijavaDugme"/>
+                    </p:column>
+                </p:row>
+                <p:defaultCommand target="prijavaDugme"/>
+            </h:panelGrid>
+
+        </h:form>
+        <h:form id="registracijaMeni">
+
+            <h:panelGrid columns="2">
+                <h:panelGrid columns="2">
+                    Ime: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.ime}" required="true" requiredMessage="Ime nije uneto"/>
+                    Prezime: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.prezime}" required="true" requiredMessage="Prezime nije uneto"/>
+                    Telefon: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.telefon}" required="true" requiredMessage="Prezime nije uneto"/>
+                    E-mail: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.eMail}" required="true" requiredMessage="E-mail nije unet"/>
+                    Korisničko ime: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.korisnickoIme}" required="true" requiredMessage="Korisničko ime nije uneto"/>
+                    <!--Provera lozinke!!!-->
+                    Lozinka: <p:password id="loz1" value="#{aplikacijaKontroler.poljaZaRegistraciju.lozinka}" required="true" requiredMessage="Lozinka nije uneta" match="loz2"/>
+                    Ponovljena lozinka: <p:password id="loz2" value="#{aplikacijaKontroler.poljaZaRegistraciju.lozinka}" required="true"/>
+                    <p:commandButton value="Registracija" action="#{aplikacijaKontroler.registracija()}" oncomplete="handleLoginRequestRegistracija(xhr, status, args)" update="loz1 loz2"/>
+                </h:panelGrid>
+                <p:panel header="Uslovi za lozinku">
+                    <ul>
+                        <li>Najmanje 8, a najviše 12 karaktera</li>
+                        <li>Mora imati bar 2 velika slova, 3 mala slova, 1 cifru i 1 znak iz skupa #,*,.,!,?,$</li>
+                        <li>Prvi karakter mora biti veliko slovo</li>
+                        <li>Nijedan karakter ne sme biti 2 puta uzastopno</li>
+                    </ul>
+                </p:panel>
+            </h:panelGrid>
+
+        </h:form>
+        <h:form>
+
+            <!--Promena lozinke!!!-->
+
+        </h:form>
         <br />
+        <!--        <p:messages id="porukeDonjiDeoEkrana" autoUpdate="true" showDetail="true" closable="true"/>-->
+        <hr/>
+        <h:form>
+            <h2>Pretraga festivala</h2>
+            Ime: <p:inputText />
+            Datum od: <p:calendar mode="popup" />
+            Datum do: <p:calendar mode="popup" />
+        </h:form>
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-        <p:graphicImage url="resources/images/posteri/none.png" width="100px"/>
-        <hr/>
-        <c:forEach items="#{entitetiTest.listaKorisnika()}" var="k">
-            #{k}
-        </c:forEach>
-        <hr/>
-        <c:forEach items="#{entitetiTest.listaKorisnika2()}" var="k">
-            #{k}
-        </c:forEach>
+        <div id="porukeDonjiDeoEkrana"><p:messages autoUpdate="true" showDetail="true" showSummary="false" closable="true"/></div>
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('prijavaDijalog').jq.effect("shake", {times: 5}, 100);
+                } else {
+
+                }
+            }
+            function handleLoginRequestRegistracija(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('registracijaDijalog').jq.effect("shake", {times: 5}, 100);
+                } else {
+                    PF('registracijaDijalog').hide();
+                    $('xyz').fadeOut();
+                }
+            }
+        </script>
     </h:body>
 </html>
 
