@@ -1,6 +1,7 @@
 /* */
 package piaprojekat.managedbeans;
 
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -14,7 +15,7 @@ import piaprojekat.entiteti.Korisnik;
  */
 @ManagedBean
 @SessionScoped
-public class KorisnikBean {
+public class KorisnikBean implements Serializable{
     private Korisnik korisnik;
     private String prijavaKorisnickoIme,prijavaLozinka;
     /**
@@ -61,5 +62,11 @@ public class KorisnikBean {
         }
         session.close();
         return adresa;
+    }
+    
+    public String odjava(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        korisnik=null;
+        return "index";
     }
 }

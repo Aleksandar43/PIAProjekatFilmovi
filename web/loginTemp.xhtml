@@ -8,7 +8,7 @@
     </h:head>
     <h:body>
         Dobrodošli, #{korisnikBean.korisnik.korisničkoIme}!<br/>
-        <h:form><p:commandLink value="Odjava" action="#{korisnikKontroler.logout()}"/></h:form>
+        <h:form><p:commandLink value="Odjava" action="#{korisnikBean.odjava()}"/></h:form>
     </h:body>
 </html>
 
