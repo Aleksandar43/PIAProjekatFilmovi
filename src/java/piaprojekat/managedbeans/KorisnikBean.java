@@ -2,6 +2,8 @@
 package piaprojekat.managedbeans;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -56,9 +58,16 @@ public class KorisnikBean implements Serializable{
         if (rez!=null) {
             System.out.println("Pronađen korisnik " + rez);
             korisnik=(Korisnik)rez;
-            adresa="loginTemp";
+            System.out.println(Arrays.toString(korisnik.getLozinka())+", "+Arrays.toString(prijavaLozinka.getBytes()));
+            if (Arrays.equals(korisnik.getLozinka(),prijavaLozinka.getBytes())) {
+                adresa = "loginTemp";
+            } else {
+                System.out.println("Pogrešna lozinka");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Neispravni podaci"));
+            }
         } else {
             System.out.println("Nije pronađen korisnik \""+prijavaKorisnickoIme+"\"");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Neispravni podaci"));
         }
         session.close();
         return adresa;
