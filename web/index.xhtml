@@ -8,16 +8,18 @@
 
     </h:head>
     <h:body>
+        <p:growl id="poruke" sticky="true" showDetail="true"/>
+        
         <h:form id="prijavaMeni">
 
             <h:panelGrid columns="3">
-                Korisničko ime: <p:inputText value="#{korisnikKontroler.korisnickoImePrijava}" required="true" requiredMessage="Korisničko ime nije popunjeno" id="korisničko_ime"/>
+                Korisničko ime: <p:inputText value="#{korisnikBean.prijavaKorisnickoIme}" required="true" requiredMessage="Korisničko ime nije popunjeno" id="korisničko_ime"/>
                 <p:message for="korisničko_ime" id="poruka_k"/>
-                Lozinka: <p:password value="#{korisnikKontroler.lozinkaPrijava}" required="true" requiredMessage="Lozinka nije popunjena" id="lozinka"/>
+                Lozinka: <p:password value="#{korisnikBean.prijavaLozinka}" required="true" requiredMessage="Lozinka nije popunjena" id="lozinka"/>
                 <p:message for="lozinka" id="poruka_l"/>
                 <p:row>
                     <p:column colspan="3">
-                        <p:commandButton update="poruka_k poruka_l" value="Prijava" actionListener="#{korisnikKontroler.prijava}" action="#{korisnikKontroler.login()}" oncomplete="handleLoginRequest(xhr, status, args)" id="prijavaDugme"/>
+                        <p:commandButton update="poruka_k poruka_l" value="Prijava" action="#{korisnikBean.prijava()}" id="prijavaDugme"/>
                     </p:column>
                 </p:row>
                 <p:defaultCommand target="prijavaDugme"/>
@@ -28,14 +30,16 @@
 
             <h:panelGrid columns="2">
                 <h:panelGrid columns="2">
-                    Ime: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.ime}" required="true" requiredMessage="Ime nije uneto"/>
-                    Prezime: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.prezime}" required="true" requiredMessage="Prezime nije uneto"/>
-                    Telefon: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.telefon}" required="true" requiredMessage="Prezime nije uneto"/>
-                    E-mail: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.eMail}" required="true" requiredMessage="E-mail nije unet"/>
-                    Korisničko ime: <p:inputText value="#{aplikacijaKontroler.poljaZaRegistraciju.korisnickoIme}" required="true" requiredMessage="Korisničko ime nije uneto"/>
-                    <!--Provera lozinke!!!-->
-                    Lozinka: <p:password id="loz1" value="#{aplikacijaKontroler.poljaZaRegistraciju.lozinka}" required="true" requiredMessage="Lozinka nije uneta" match="loz2"/>
-                    Ponovljena lozinka: <p:password id="loz2" value="#{aplikacijaKontroler.poljaZaRegistraciju.lozinka}" required="true"/>
+                    Ime: <p:inputText value="#{pocetnaStranaBean.poljaZaRegistraciju.ime}" required="true" requiredMessage="Ime nije uneto"/>
+                    Prezime: <p:inputText value="#{pocetnaStranaBean.poljaZaRegistraciju.prezime}" required="true" requiredMessage="Prezime nije uneto"/>
+                    Telefon: <p:inputText value="#{pocetnaStranaBean.poljaZaRegistraciju.telefon}" required="true" requiredMessage="Telefon nije unet"/>
+                    E-mail: <p:inputText value="#{pocetnaStranaBean.poljaZaRegistraciju.EMail}" required="true" requiredMessage="E-mail nije unet"/>
+                    Korisničko ime: <p:inputText value="#{pocetnaStranaBean.poljaZaRegistraciju.korisničkoIme}" required="true" requiredMessage="Korisničko ime nije uneto"/>
+                    <!--Provera lozinke!!!
+                    ajax - event=keyup/blur, listener= void f-ja, update=polje 
+                    uslovi za lozinku - event=focus -> render panel-->
+                    Lozinka: <p:password id="loz1" value="#{pocetnaStranaBean.poljaZaRegistraciju.lozinka}" required="true" requiredMessage="Lozinka nije uneta" match="loz2"/>
+                    Ponovljena lozinka: <p:password id="loz2" required="true"/>
                     <p:commandButton value="Registracija" action="#{aplikacijaKontroler.registracija()}" oncomplete="handleLoginRequestRegistracija(xhr, status, args)" update="loz1 loz2"/>
                 </h:panelGrid>
                 <p:panel header="Uslovi za lozinku">
@@ -51,37 +55,39 @@
         </h:form>
         <h:form>
 
-            <!--Promena lozinke!!!-->
+            <h:panelGrid columns="2">
+                <h:panelGrid columns="2">
+                    Korisničko ime: <p:inputText value="#{pocetnaStranaBean.promenaLozinkeKorisnickoIme}" required="true" requiredMessage="Korisničko ime nije uneto"/>
+                    Stara lozinka: <p:password id="lozStara" value="#{pocetnaStranaBean.promenaLozinkeStaraLozinka}" required="true" requiredMessage="Stara lozinka nije uneta"/>
+                    Nova lozinka: <p:password id="lozNova1" value="#{pocetnaStranaBean.promenaLozinkeNovaLozinka}" required="true" requiredMessage="Nova lozinka nije uneta" match="lozNova2"/>
+                    Ponovljena nova lozinka: <p:password id="lozNova2" required="true"/>
+                    <p:commandButton value="Promena lozinke" action="#{aplikacijaKontroler.registracija()}" oncomplete="handleLoginRequestRegistracija(xhr, status, args)" update="lozNova1 lozNova2"/>
+                </h:panelGrid>
+                <p:panel header="Uslovi za lozinku">
+                    <ul>
+                        <li>Najmanje 8, a najviše 12 karaktera</li>
+                        <li>Mora imati bar 2 velika slova, 3 mala slova, 1 cifru i 1 znak iz skupa #,*,.,!,?,$</li>
+                        <li>Prvi karakter mora biti veliko slovo</li>
+                        <li>Nijedan karakter ne sme biti 2 puta uzastopno</li>
+                    </ul>
+                </p:panel>
+            </h:panelGrid>
 
         </h:form>
         <br />
         <!--        <p:messages id="porukeDonjiDeoEkrana" autoUpdate="true" showDetail="true" closable="true"/>-->
         <hr/>
         <h:form>
-            <h2>Pretraga festivala</h2>
-            Ime: <p:inputText />
-            Datum od: <p:calendar mode="popup" />
-            Datum do: <p:calendar mode="popup" />
+            <h2>Pretraga trenutnih i budućih festivala</h2>
+            <h:panelGrid columns="2">
+                Ime: <p:inputText />
+                Datum od: <p:calendar showOn="button" pattern="dd.mm.yyyy."/>
+                Datum do: <p:calendar showOn="button" pattern="dd.mm.yyyy."/>
+                <p:commandButton value="Pretraži" />
+            </h:panelGrid>
         </h:form>
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
         <div id="porukeDonjiDeoEkrana"><p:messages autoUpdate="true" showDetail="true" showSummary="false" closable="true"/></div>
-        <script type="text/javascript">
-            function handleLoginRequest(xhr, status, args) {
-                if (args.validationFailed || !args.loggedIn) {
-                    PF('prijavaDijalog').jq.effect("shake", {times: 5}, 100);
-                } else {
-
-                }
-            }
-            function handleLoginRequestRegistracija(xhr, status, args) {
-                if (args.validationFailed || !args.loggedIn) {
-                    PF('registracijaDijalog').jq.effect("shake", {times: 5}, 100);
-                } else {
-                    PF('registracijaDijalog').hide();
-                    $('xyz').fadeOut();
-                }
-            }
-        </script>
     </h:body>
 </html>
 
