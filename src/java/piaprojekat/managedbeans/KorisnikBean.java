@@ -57,17 +57,17 @@ public class KorisnikBean implements Serializable{
         Object rez = session.getNamedQuery("Korisnik.findByKorisni\u010dkoIme").setParameter("korisni\u010dkoIme", prijavaKorisnickoIme).uniqueResult();
         if (rez!=null) {
             System.out.println("Pronađen korisnik " + rez);
-            korisnik=(Korisnik)rez;
+            korisnik=(Korisnik)rez; //ovde ga i stavlja u bean
             System.out.println(Arrays.toString(korisnik.getLozinka())+", "+Arrays.toString(prijavaLozinka.getBytes()));
             if (Arrays.equals(korisnik.getLozinka(),prijavaLozinka.getBytes())) {
                 adresa = "loginTemp";
             } else {
                 System.out.println("Pogrešna lozinka");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Neispravni podaci"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Neispravni podaci",null));
             }
         } else {
             System.out.println("Nije pronađen korisnik \""+prijavaKorisnickoIme+"\"");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Neispravni podaci"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Neispravni podaci",null));
         }
         session.close();
         return adresa;

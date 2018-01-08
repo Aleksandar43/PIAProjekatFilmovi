@@ -12,14 +12,12 @@
         
         <h:form id="prijavaMeni">
 
-            <h:panelGrid columns="3">
+            <h:panelGrid columns="2">
                 Korisničko ime: <p:inputText value="#{korisnikBean.prijavaKorisnickoIme}" required="true" requiredMessage="Korisničko ime nije popunjeno" id="korisničko_ime"/>
-                <p:message for="korisničko_ime" id="poruka_k"/>
                 Lozinka: <p:password value="#{korisnikBean.prijavaLozinka}" required="true" requiredMessage="Lozinka nije popunjena" id="lozinka"/>
-                <p:message for="lozinka" id="poruka_l"/>
                 <p:row>
-                    <p:column colspan="3">
-                        <p:commandButton update="poruka_k poruka_l" value="Prijava" action="#{korisnikBean.prijava()}" id="prijavaDugme"/>
+                    <p:column colspan="2">
+                        <p:commandButton value="Prijava" action="#{korisnikBean.prijava()}" id="prijavaDugme"/>
                     </p:column>
                 </p:row>
                 <p:defaultCommand target="prijavaDugme"/>
@@ -61,7 +59,7 @@
                     Stara lozinka: <p:password id="lozStara" value="#{pocetnaStranaBean.promenaLozinkeStaraLozinka}" required="true" requiredMessage="Stara lozinka nije uneta"/>
                     Nova lozinka: <p:password id="lozNova1" value="#{pocetnaStranaBean.promenaLozinkeNovaLozinka}" required="true" requiredMessage="Nova lozinka nije uneta" match="lozNova2"/>
                     Ponovljena nova lozinka: <p:password id="lozNova2" required="true"/>
-                    <p:commandButton value="Promena lozinke" action="#{aplikacijaKontroler.registracija()}" oncomplete="handleLoginRequestRegistracija(xhr, status, args)" update="lozNova1 lozNova2"/>
+                    <p:commandButton value="Promena lozinke" action="#{pocetnaStranaBean.promenaLozinke()}" update="lozNova1 lozNova2"/>
                 </h:panelGrid>
                 <p:panel header="Uslovi za lozinku">
                     <ul>
@@ -87,7 +85,6 @@
             </h:panelGrid>
         </h:form>
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-        <div id="porukeDonjiDeoEkrana"><p:messages autoUpdate="true" showDetail="true" showSummary="false" closable="true"/></div>
     </h:body>
 </html>
 
