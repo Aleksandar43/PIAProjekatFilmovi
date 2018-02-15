@@ -24,8 +24,8 @@ public class EntitetiTest {
         session.beginTransaction();
         List<Korisnik> resultList = session.createQuery("from Korisnik k")
                 .list();
-//        for(Object o:resultList)
-//            System.out.println(o);
+        for(Object o:resultList)
+            System.out.println(o);
         session.close();
         return resultList;
     }
@@ -36,9 +36,9 @@ public class EntitetiTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<Korisnik> resultList = session.getNamedQuery("Korisnik.findAll").list();
-//        System.out.println("listaKorisnika2: ----------------------");
-//        for(Object o:resultList)
-//            System.out.println(o);
+        System.out.println("listaKorisnika2: ----------------------");
+        for(Object o:resultList)
+            System.out.println(o);
         session.close();
         return resultList;
     }
