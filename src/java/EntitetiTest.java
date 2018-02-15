@@ -1,9 +1,11 @@
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.primefaces.model.map.LatLng;
 import piaprojekat.HibernateUtil;
 import piaprojekat.entiteti.*;
 
@@ -41,5 +43,12 @@ public class EntitetiTest {
             System.out.println(o);
         session.close();
         return resultList;
+    }
+    public List<LatLng> getKoordinate(){
+        List<LatLng> koordinate=new ArrayList<>();
+        koordinate.add(new LatLng(44, 22.5));
+        koordinate.add(new LatLng(30, 50));
+        koordinate.add(new LatLng(35, 35));
+        return koordinate;
     }
 }
