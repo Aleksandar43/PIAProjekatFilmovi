@@ -58,6 +58,7 @@ public class KorisnikBean implements Serializable{
         if (rez!=null) {
             System.out.println("Pronađen korisnik " + rez);
             korisnik=(Korisnik)rez; //ovde ga i stavlja u bean
+            //Da li koristiti varchar za lozinke?
             System.out.println(Arrays.toString(korisnik.getLozinka())+", "+Arrays.toString(prijavaLozinka.getBytes()));
             if (Arrays.equals(korisnik.getLozinka(),prijavaLozinka.getBytes())) {
                 adresa = "loginTemp";

@@ -2,6 +2,7 @@
 package piaprojekat.entiteti;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,6 +29,9 @@ import javax.persistence.Table;
     , @NamedQuery(name = "Lokacija.findByNaziv", query = "SELECT l FROM Lokacija l WHERE l.naziv = :naziv")
     , @NamedQuery(name = "Lokacija.findByGrad", query = "SELECT l FROM Lokacija l WHERE l.grad = :grad")})
 public class Lokacija implements Serializable {
+
+    @ManyToMany(mappedBy = "lokacijaCollection")
+    private Collection<Festival> festivalCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -111,6 +116,14 @@ public class Lokacija implements Serializable {
     @Override
     public String toString() {
         return "piaprojekat.entiteti.Lokacija[ id=" + id + " ]";
+    }
+
+    public Collection<Festival> getFestivalCollection() {
+        return festivalCollection;
+    }
+
+    public void setFestivalCollection(Collection<Festival> festivalCollection) {
+        this.festivalCollection = festivalCollection;
     }
     
 }

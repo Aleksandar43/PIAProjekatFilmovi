@@ -9,7 +9,7 @@
     </h:head>
     <h:body>
         <p:growl id="poruke" sticky="true" showDetail="true" autoUpdate="true"/>
-        
+
         <h:form id="prijavaMeni">
 
             <h:panelGrid columns="2">
@@ -85,6 +85,54 @@
             </h:panelGrid>
         </h:form>
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <h:panelGroup id="map" layout="block" style="width: 500px; height: 500px; visibility: visible">
+            <!--<p:gmap fitBounds="true"/> zoom... ne moze se azurirati bounds posle startup-->
+        </h:panelGroup>
+        <script>
+            function initMap() {
+                var locations = [
+                    ['DESCRIPTION', 41.926979, 12.517385, 3],
+                    ['DESCRIPTION', 41.914873, 12.506486, 2],
+                    ['DESCRIPTION', 41.918574, 12.507201, 1]
+                ];
+
+                window.map = new google.maps.Map(document.getElementById('map'), {
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+
+                var infowindow = new google.maps.InfoWindow();
+
+                var bounds = new google.maps.LatLngBounds();
+
+                for (i = 0; i &lt; locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+
+                    bounds.extend(marker.position);
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        };
+                    })(marker, i));
+                }
+
+                map.fitBounds(bounds);
+
+                /*var listener = google.maps.event.addListener(map, "idle", function () {
+                 map.setZoom(3);
+                 google.maps.event.removeListener(listener);
+                 });*/
+            }
+
+            //window.onload = initMap();
+        </script>
+        <script async="async" defer="defer"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqU70l7209vVeq8qlVZxrNGtCMsOqdRXs&amp;callback=initMap">
+        </script>
     </h:body>
 </html>
 

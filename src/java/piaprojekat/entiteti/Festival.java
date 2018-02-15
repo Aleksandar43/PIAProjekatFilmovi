@@ -2,6 +2,7 @@
 package piaprojekat.entiteti;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -11,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,6 +38,12 @@ import javax.persistence.TemporalType;
     , @NamedQuery(name = "Festival.findByGrad", query = "SELECT f FROM Festival f WHERE f.grad = :grad")
     , @NamedQuery(name = "Festival.findByMaksUlaznicaPoKorisniku", query = "SELECT f FROM Festival f WHERE f.maksUlaznicaPoKorisniku = :maksUlaznicaPoKorisniku")})
 public class Festival implements Serializable {
+
+    @JoinTable(name = "festivalilokacije", joinColumns = {
+        @JoinColumn(name = "idFestivala", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idLokacije", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<Lokacija> lokacijaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -166,6 +176,14 @@ public class Festival implements Serializable {
     @Override
     public String toString() {
         return "piaprojekat.entiteti.Festival[ id=" + id + " ]";
+    }
+
+    public Collection<Lokacija> getLokacijaCollection() {
+        return lokacijaCollection;
+    }
+
+    public void setLokacijaCollection(Collection<Lokacija> lokacijaCollection) {
+        this.lokacijaCollection = lokacijaCollection;
     }
     
 }
