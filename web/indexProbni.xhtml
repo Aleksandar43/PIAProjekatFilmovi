@@ -28,10 +28,13 @@
             </h:commandLink><br/>
             <h:commandLink value="Link ka filmu sa id=2" action="#{filmBean.otvoriStranicuFilma()}">
                 <f:param name="idFilm" value="2"/>
-            </h:commandLink>
+            </h:commandLink><br/>
             <h:commandLink value="Link ka filmu sa id=3" action="#{filmBean.otvoriStranicuFilma()}">
                 <f:param name="idFilm" value="3"/>
-            </h:commandLink>
+            </h:commandLink><br/>
+            <h:commandLink value="Link ka festivalu sa id=1" action="#{festivalBean.otvoriStranicuFestivala()}">
+                <f:param name="idFestival" value="1"/>
+            </h:commandLink><br/>
         </h:form>
         <h:panelGroup id="map" layout="block" style="width: 500px; height: 500px;">
             <!--<p:gmap fitBounds="true"/> zoom... ne moze se azurirati bounds posle startup-->

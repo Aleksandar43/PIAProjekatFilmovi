@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>#{festivalBean.festival.naziv} - Sajt</title>
+    </h:head>
+    <h:body>
+        <h:panelGrid columns="2">
+            Ime: <h:outputText value="#{festivalBean.festival.naziv}"/>
+            Datumi: <h:panelGroup>
+                <h:outputText value="#{festivalBean.festival.datumPočetka}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+                <h:outputText value=" - "/>
+                <h:outputText value="#{festivalBean.festival.datumKraja}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+            </h:panelGroup>
+            Opis: <h:outputText value="#{festivalBean.festival.opis}"/>
+            Lokacije: <p:dataList value="#{festivalBean.festival.lokacijaCollection}" var="l">
+                #{l.naziv}
+            </p:dataList>
+        </h:panelGrid>
+        Program
+        <p:dataList value="#{festivalBean.festival.projekcijaList}" var="p">
+            #{p.idFilma}, #{p.idLokacije}, #{p.vreme}
+        </p:dataList>
+        link ka početnom ekranu
+    </h:body>
+</html>
+
