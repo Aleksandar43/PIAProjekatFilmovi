@@ -19,7 +19,7 @@ public class FestivalBean {
     private Festival festival;
     public FestivalBean() {
     }
-
+    
     public Festival getFestival() {
         return festival;
     }

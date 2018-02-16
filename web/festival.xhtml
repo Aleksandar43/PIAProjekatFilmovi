@@ -26,7 +26,9 @@
         </h:panelGrid>
         Program
         <p:dataList value="#{festivalBean.festival.projekcijaList}" var="p">
-            #{p.idFilma}, #{p.idLokacije}, #{p.vreme}
+            #{p.idFilma.nazivSrpski}, #{p.idLokacije.naziv},  <h:outputText value="#{p.vreme}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
         </p:dataList>
         link ka početnom ekranu
     </h:body>
