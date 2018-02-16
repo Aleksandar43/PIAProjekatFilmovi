@@ -37,6 +37,8 @@
             <!--<p:gmap fitBounds="true"/> zoom... ne moze se azurirati bounds posle startup-->
         </h:panelGroup>
             <h:outputScript>
+                var marker;
+                var bounds;
             function initMap() {
                 var locations = [
                     ['DESCRIPTION', 41.926979, 12.517385, 3],
@@ -50,7 +52,7 @@
 
                 var infowindow = new google.maps.InfoWindow();
 
-                var bounds = new google.maps.LatLngBounds();
+                bounds = new google.maps.LatLngBounds();
 
                 <c:forEach items="#{entitetiTest.koordinate}" var="k">{
                     marker = new google.maps.Marker({
@@ -67,6 +69,28 @@
                         };
                     })(marker));
                 }</c:forEach>
+                console.log(bounds);
+                
+                function rez(results, status){
+                if (status == 'OK') {
+                    //map.setCenter(results[0].geometry.location);
+                    marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                    console.log(marker.position);
+                    bounds.extend(marker.position);
+                    map.fitBounds(bounds);
+                  } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                  }
+                
+                }
+                
+                geocoder = new google.maps.Geocoder();
+                geocoder.geocode( { 'address': "#{entitetiTest.lokacija}"}, 
+                    rez);
+                console.log(bounds);
 
                 map.fitBounds(bounds);
 

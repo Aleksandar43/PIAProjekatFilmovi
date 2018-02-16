@@ -51,4 +51,7 @@ public class EntitetiTest {
         koordinate.add(new LatLng(35, 35));
         return koordinate;
     }
+    public String getLokacija(){
+        return "Vanuatu";
+    }
 }
