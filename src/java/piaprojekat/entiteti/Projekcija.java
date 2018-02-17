@@ -32,6 +32,10 @@ import javax.persistence.TemporalType;
     , @NamedQuery(name = "Projekcija.findByOtkazana", query = "SELECT p FROM Projekcija p WHERE p.otkazana = :otkazana")})
 public class Projekcija implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "cena")
+    private int cena;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -149,6 +153,14 @@ public class Projekcija implements Serializable {
     @Override
     public String toString() {
         return "piaprojekat.entiteti.Projekcija[ id=" + id + " ]";
+    }
+
+    public int getCena() {
+        return cena;
+    }
+
+    public void setCena(int cena) {
+        this.cena = cena;
     }
     
 }

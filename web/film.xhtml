@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>#{filmBean.film.nazivSrpski} - Sajt</title>
     </h:head>
@@ -30,6 +31,13 @@
             <p:graphicImage url="#{s.putanja}" width="300px"/>
         </p:galleria>
         <p:media value="#{filmBean.film.linkYoutube}" width="400px" height="300px" player="flash" rendered="#{filmBean.film.linkYoutube!=null}"/>
+        <h2>Prikazivanja</h2>
+        <p:dataList value="#{filmBean.film.projekcijaList}" var="p">
+            #{p.idFestivala.naziv}, #{p.idLokacije.naziv}, <h:outputText value="#{p.vreme}">
+                    <f:convertDateTime pattern="HH:mm"/>
+                </h:outputText>
+            ,#{p.cena}
+        </p:dataList>
         link ka početnom ekranu
     </h:body>
 </html>

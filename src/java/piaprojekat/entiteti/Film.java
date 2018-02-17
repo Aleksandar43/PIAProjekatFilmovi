@@ -73,7 +73,7 @@ public class Film implements Serializable {
     private String linkYoutube;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilma", fetch = FetchType.EAGER)
     private List<Slika> slikaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilma")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilma", fetch = FetchType.EAGER)
     private List<Projekcija> projekcijaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilma")
     private List<Ocena> ocenaList;
