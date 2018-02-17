@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>#{filmBean.film.nazivSrpski} - Sajt</title>
     </h:head>
@@ -16,9 +17,14 @@
             Glavni glumci: <h:outputText value="#{filmBean.film.glavniGlumci}"/>
             Trajanje: <h:outputText value="#{filmBean.film.trajanje} minuta"/>
             Zemlja/e: <h:outputText value="#{filmBean.film.zemlja}"/>
-            Link 1: <h:outputText value="#{filmBean.film.linkIMDB}"/>
-            Link 2: <h:outputText value="#{filmBean.film.linkRT}"/>
+            <c:if test="#{filmBean.film.linkIMDB!=null}">
+                Link 1: <h:outputLink value="#{filmBean.film.linkIMDB}">#{filmBean.film.linkIMDB}</h:outputLink>
+            </c:if>
+            <c:if test="#{filmBean.film.linkRT!=null}">
+                Link 2: <h:outputLink value="#{filmBean.film.linkRT}">#{filmBean.film.linkRT}</h:outputLink>
+            </c:if>
         </h:panelGrid>
+        <p:media value="#{filmBean.film.linkYoutube}" width="400px" height="300px" player="flash" rendered="#{filmBean.film.linkYoutube!=null}"/>
         link ka početnom ekranu
     </h:body>
 </html>
