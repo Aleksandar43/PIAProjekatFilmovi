@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -70,7 +71,7 @@ public class Film implements Serializable {
     private String linkRT;
     @Column(name = "linkYoutube")
     private String linkYoutube;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilma")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilma", fetch = FetchType.EAGER)
     private List<Slika> slikaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilma")
     private List<Projekcija> projekcijaList;

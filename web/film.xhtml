@@ -8,6 +8,8 @@
         <title>#{filmBean.film.nazivSrpski} - Sajt</title>
     </h:head>
     <h:body>
+        <p:graphicImage url="#{filmBean.film.poster}" height="250px" rendered="#{filmBean.film.poster!=null}"/>
+        <p:graphicImage url="resources/images/posteri/none.png" height="250px" rendered="#{filmBean.film.poster==null}"/>
         <h:panelGrid columns="2">
             Ime: <h:outputText value="#{filmBean.film.nazivSrpski}"/>
             Ime u originalu: <h:outputText value="#{filmBean.film.nazivOriginal}"/>
@@ -24,6 +26,9 @@
                 Link 2: <h:outputLink value="#{filmBean.film.linkRT}">#{filmBean.film.linkRT}</h:outputLink>
             </c:if>
         </h:panelGrid>
+        <p:galleria value="#{filmBean.film.slikaList}" var="s" panelWidth="300" panelHeight="200">
+            <p:graphicImage url="#{s.putanja}" width="300px"/>
+        </p:galleria>
         <p:media value="#{filmBean.film.linkYoutube}" width="400px" height="300px" player="flash" rendered="#{filmBean.film.linkYoutube!=null}"/>
         link ka početnom ekranu
     </h:body>
