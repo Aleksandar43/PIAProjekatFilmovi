@@ -15,18 +15,18 @@ import piaprojekat.entiteti.Festival;
 @ManagedBean
 @RequestScoped
 public class PretragaBean {
-    private String festival;
+    private String imeFestivala;
     private Date datumOd,datumDo;
     private List<Festival> listaFestivala=new ArrayList<>();
     public PretragaBean() {
     }
 
-    public String getFestival() {
-        return festival;
+    public String getImeFestivala() {
+        return imeFestivala;
     }
 
-    public void setFestival(String festival) {
-        this.festival = festival;
+    public void setImeFestivala(String imeFestivala) {
+        this.imeFestivala = imeFestivala;
     }
 
     public Date getDatumOd() {
@@ -60,7 +60,10 @@ public class PretragaBean {
         List<Festival> lista = session.getNamedQuery("Festival.findAll").list();
         listaFestivala=new ArrayList<>();
         for(Festival f:lista){
-            if(!f.getDatumKraja().before(Calendar.getInstance().getTime())) listaFestivala.add(f);
+            if(!f.getDatumKraja().before(Calendar.getInstance().getTime()) //za zadatak, malo čudno
+                    && f.getNaziv().toLowerCase().contains(imeFestivala.toLowerCase())
+                    && (datumOd==null || datumOd.before(f.getDatumPočetka()))
+                    && (datumDo==null || datumDo.after(f.getDatumKraja()))) listaFestivala.add(f);
         }
         session.close();
     }

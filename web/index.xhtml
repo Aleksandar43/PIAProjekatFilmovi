@@ -79,9 +79,9 @@
         <h:form>
             <h2>Pretraga trenutnih i budućih festivala</h2>
             <h:panelGrid columns="2">
-                Ime: <p:inputText value="#{pretragaBean.festival}"/>
-                Datum od: <p:calendar showOn="button" pattern="dd.mm.yyyy." value="#{pretragaBean.datumOd}"/>
-                Datum do: <p:calendar showOn="button" pattern="dd.mm.yyyy." value="#{pretragaBean.datumDo}"/>
+                Ime: <p:inputText value="#{pretragaBean.imeFestivala}"/>
+                Datum od: <p:calendar showOn="button" pattern="dd.MM.yyyy." value="#{pretragaBean.datumOd}"/>
+                Datum do: <p:calendar showOn="button" pattern="dd.MM.yyyy." value="#{pretragaBean.datumDo}"/>
                 <p:commandButton value="Pretraži" actionListener="#{pretragaBean.pretraga()}" update="tabelaFestivala"/>
             </h:panelGrid>
             <p:dataTable value="#{pretragaBean.listaFestivala}" var="f" id="tabelaFestivala">
