@@ -1,11 +1,12 @@
 /* */
 package piaprojekat.managedbeans;
 
-import java.util.List;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import piaprojekat.HibernateUtil;
@@ -16,8 +17,8 @@ import piaprojekat.entiteti.Film;
  * @author Aleksandar
  */
 @ManagedBean
-@RequestScoped
-public class FilmBean {
+@SessionScoped
+public class FilmBean implements Serializable{
     private Film film;
     public FilmBean() {
     }
@@ -43,6 +44,7 @@ public class FilmBean {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         film = (Film) session.getNamedQuery("Film.findById").setParameter("id", id).uniqueResult();
+        System.out.println("otvoriStranicuFilma(): film="+film);
         session.close();
         return "film";
     }

@@ -32,13 +32,78 @@
         </p:galleria>
         <p:media value="#{filmBean.film.linkYoutube}" width="400px" height="300px" player="flash" rendered="#{filmBean.film.linkYoutube!=null}"/>
         <h2>Prikazivanja</h2>
-        <p:dataList value="#{filmBean.film.projekcijaList}" var="p">
-            #{p.idFestivala.naziv}, #{p.idLokacije.naziv}, <h:outputText value="#{p.vreme}">
+        <p:dataTable value="#{filmBean.film.projekcijaList}" var="p">
+            <p:column><f:facet name="header">Festival</f:facet>
+                #{p.idFestivala.naziv}
+            </p:column>
+            <p:column><f:facet name="header">Lokacija</f:facet>
+                #{p.idLokacije.naziv}
+            </p:column>
+            <p:column><f:facet name="header">Vreme</f:facet>
+                <h:outputText value="#{p.vreme}">
+                    <f:convertDateTime pattern="dd.MM.yyyy."/>
+                </h:outputText>
+                ,
+                <h:outputText value="#{p.vreme}">
                     <f:convertDateTime pattern="HH:mm"/>
                 </h:outputText>
-            ,#{p.cena}
-        </p:dataList>
+            </p:column>
+            <p:column><f:facet name="header">Cena</f:facet>
+                #{p.cena}
+            </p:column>
+<!--            <p:column><f:facet name="header">Rezervisanje</f:facet>
+                
+            </p:column>-->
+        </p:dataTable>
+        <p:commandButton value="Rezerviši" onclick="#{rezervacijaBean.setVidljivostForme(true)}" update="rezForma"/>
+        
         link ka početnom ekranu
+        
+        
+            <h:form rendered="#{rezervacijaBean.vidljivostForme}" id="rezForma">
+                Maks. ulaznica: <h:outputText value="#{rezervacijaBean.maksBrojUlaznica}" id="abcde"/>
+                <h:panelGrid columns="2">
+                    Za projekciju:
+                    <p:selectOneMenu id="rezProj" value="#{rezervacijaBean.idProjekcije}">
+                        <p:ajax listener="#{rezervacijaBean.promeniBrojUlaznica}" update="rezForma brulOneMenu abcde"/>
+                        <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{rezervacijaBean.sveProjekcije}" var="p" itemLabel="#{p}" itemValue="#{p.id}"/>
+                    </p:selectOneMenu>
+                    Broj ulaznica:
+                    <p:selectOneMenu id="brulOneMenu" value="#{rezervacijaBean.brojUlaznicaZaProjekciju}">
+<!--                        <c:forEach begin="1" end="#{rezervacijaBean.maksBrojUlaznica}" var="i">
+                            <f:selectItem itemLabel="asdf#{i}" itemValue="#{i}"/>
+                        </c:forEach>-->
+                        <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{rezervacijaBean.brUl}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="Rezerviši"/><p:commandButton value="Otkaži" onclick="#{rezervacijaBean.setVidljivostForme(false)}" update="rezForma"/>
+                </h:panelGrid>
+            </h:form>
+        <h:form>
+            <p:growl id="msgs" showDetail="true" />
+
+            <p:panel header="Select a Location" style="margin-bottom:10px;">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="country" value="Country: " />
+                    <p:selectOneMenu id="country" value="#{rezervacijaBean.country}" style="width:150px">
+                        <p:ajax listener="#{rezervacijaBean.onCountryChange}" update="city" />
+                        <f:selectItem itemLabel="Select Country" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{rezervacijaBean.countries}" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="city" value="City: " />
+                    <p:selectOneMenu id="city" value="#{rezervacijaBean.city}" style="width:150px">
+                        <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{rezervacijaBean.cities}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <p:separator />
+
+                <p:commandButton value="Submit" update="msgs" actionListener="#{rezervacijaBean.displayLocation}" icon="ui-icon-check" />
+            </p:panel>
+        </h:form>
     </h:body>
 </html>
 

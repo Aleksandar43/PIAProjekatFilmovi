@@ -36,6 +36,31 @@
                 <f:param name="idFestival" value="1"/>
             </h:commandLink><br/>
         </h:form>
+        <hr/>
+        <h:form>
+            <p:growl id="msgs" showDetail="true" />
+
+            <p:panel header="Select a Location" style="margin-bottom:10px;">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="country" value="Country: " />
+                    <p:selectOneMenu id="country" value="#{rezervacijaBean.country}" style="width:150px">
+                        <p:ajax listener="#{rezervacijaBean.onCountryChange}" update="city" />
+                        <f:selectItem itemLabel="Select Country" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{rezervacijaBean.countries}" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="city" value="City: " />
+                    <p:selectOneMenu id="city" value="#{rezervacijaBean.city}" style="width:150px">
+                        <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{rezervacijaBean.cities}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <p:separator />
+
+                <p:commandButton value="Submit" update="msgs" actionListener="#{rezervacijaBean.displayLocation}" icon="ui-icon-check" />
+            </p:panel>
+        </h:form>
     </h:body>
 </html>
 
