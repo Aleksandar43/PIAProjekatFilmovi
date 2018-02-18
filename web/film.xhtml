@@ -71,39 +71,12 @@
                     </p:selectOneMenu>
                     Broj ulaznica:
                     <p:selectOneMenu id="brulOneMenu" value="#{rezervacijaBean.brojUlaznicaZaProjekciju}">
-<!--                        <c:forEach begin="1" end="#{rezervacijaBean.maksBrojUlaznica}" var="i">
-                            <f:selectItem itemLabel="asdf#{i}" itemValue="#{i}"/>
-                        </c:forEach>-->
                         <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{rezervacijaBean.brUl}"/>
                     </p:selectOneMenu>
                     <p:commandButton value="Rezerviši"/><p:commandButton value="Otkaži" onclick="#{rezervacijaBean.setVidljivostForme(false)}" update="rezForma"/>
                 </h:panelGrid>
             </h:form>
-        <h:form>
-            <p:growl id="msgs" showDetail="true" />
-
-            <p:panel header="Select a Location" style="margin-bottom:10px;">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <p:outputLabel for="country" value="Country: " />
-                    <p:selectOneMenu id="country" value="#{rezervacijaBean.country}" style="width:150px">
-                        <p:ajax listener="#{rezervacijaBean.onCountryChange}" update="city" />
-                        <f:selectItem itemLabel="Select Country" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{rezervacijaBean.countries}" />
-                    </p:selectOneMenu>
-
-                    <p:outputLabel for="city" value="City: " />
-                    <p:selectOneMenu id="city" value="#{rezervacijaBean.city}" style="width:150px">
-                        <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{rezervacijaBean.cities}" />
-                    </p:selectOneMenu>
-                </h:panelGrid>
-
-                <p:separator />
-
-                <p:commandButton value="Submit" update="msgs" actionListener="#{rezervacijaBean.displayLocation}" icon="ui-icon-check" />
-            </p:panel>
-        </h:form>
     </h:body>
 </html>
 
