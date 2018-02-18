@@ -8,7 +8,7 @@
         <title>Sajt sa filmovima</title>
 
     </h:head>
-    <h:body>
+    <h:body id="body">
         <p:growl id="poruke" sticky="true" showDetail="true" autoUpdate="true"/>
 
         <h:form id="prijavaMeni">
@@ -74,7 +74,6 @@
 
         </h:form>
         <br />
-        <!--        <p:messages id="porukeDonjiDeoEkrana" autoUpdate="true" showDetail="true" closable="true"/>-->
         <hr/>
         <h:form>
             <h2>Pretraga trenutnih i budućih festivala</h2>
@@ -82,9 +81,11 @@
                 Ime: <p:inputText value="#{pretragaBean.imeFestivala}"/>
                 Datum od: <p:calendar showOn="button" pattern="dd.MM.yyyy." value="#{pretragaBean.datumOd}"/>
                 Datum do: <p:calendar showOn="button" pattern="dd.MM.yyyy." value="#{pretragaBean.datumDo}"/>
-                <p:commandButton value="Pretraži" actionListener="#{pretragaBean.pretraga()}" update="tabelaFestivala"/>
+                <p:commandButton value="Pretraži" actionListener="#{pretragaBean.pretraga()}" update="k">
+                    <f:ajax render="tabelaFestivala"/>
+                </p:commandButton>
             </h:panelGrid>
-            <p:dataTable value="#{pretragaBean.listaFestivala}" var="f" id="tabelaFestivala">
+            <h:panelGrid id="k"><p:dataTable value="#{pretragaBean.listaFestivala}" var="f" id="tabelaFestivala" paginator="true" rendered="#{pretragaBean.tipPretrage==1}">
                 <p:column headerText="Festival">
                     #{f.naziv}
                 </p:column>
@@ -97,7 +98,7 @@
                 <p:column headerText="Mesto">
                         #{f.grad}
                 </p:column>
-            </p:dataTable>
+            </p:dataTable></h:panelGrid>
         </h:form>
     </h:body>
 </html>

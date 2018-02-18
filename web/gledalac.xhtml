@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gledalac</title>
+    </h:head>
+    <h:body id="body">
+        <h:form>
+            <h2>Pretraga festivala</h2>
+            <h:panelGrid columns="2">
+                Ime festivala: <p:inputText value="#{pretragaBean.imeFestivala}"/>
+                Datum od: <p:calendar showOn="button" pattern="dd.MM.yyyy." value="#{pretragaBean.datumOd}"/>
+                Datum do: <p:calendar showOn="button" pattern="dd.MM.yyyy." value="#{pretragaBean.datumDo}"/>
+                Originalni naziv filma: <p:inputText value="#{pretragaBean.originalniNazivFilma}"/>
+                <p:commandButton value="Pretraži" actionListener="#{pretragaBean.pretragaKodKorisnika()}" update="k"/>
+            </h:panelGrid>
+            <h:panelGrid id="k">
+                <p:dataTable value="#{pretragaBean.listaFestivala}" var="f" id="tabelaFestivala" paginator="true" rendered="#{pretragaBean.tipPretrage==1}">
+                    <p:column headerText="Festival">
+                        #{f.naziv}
+                    </p:column>
+                    <p:column headerText="Datum početka">
+                        <h:outputText value="#{f.datumPočetka}"><f:convertDateTime pattern="dd.MM.yyyy."/></h:outputText>
+                    </p:column>
+                    <p:column headerText="Datum kraja">
+                        <h:outputText value="#{f.datumKraja}"><f:convertDateTime pattern="dd.MM.yyyy."/></h:outputText>
+                    </p:column>
+                    <p:column headerText="Mesto">
+                        #{f.grad}
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable value="#{pretragaBean.listaProjekcijaFilma}" var="p" id="tabelaProjekcija" paginator="true" rendered="#{pretragaBean.tipPretrage==2}">
+                    <p:column headerText="Film">
+                        #{p.idFilma.nazivOriginal}
+                    </p:column>
+                    <p:column headerText="Festival">
+                        #{p.idFestivala.naziv}
+                    </p:column>
+                    <p:column headerText="Vreme projekcije">
+                        <h:outputText value="#{p.vreme}"><f:convertDateTime pattern="dd.MM.yyyy. HH:mm"/></h:outputText>
+                    </p:column>
+                    <p:column headerText="Lokacija">
+                        #{p.idLokacije.naziv}
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+        </h:form>
+        <h:form><p:commandLink value="Odjava" action="#{korisnikBean.odjava()}"/></h:form>
+    </h:body>
+</html>
+

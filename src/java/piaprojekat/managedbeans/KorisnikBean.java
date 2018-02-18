@@ -57,11 +57,11 @@ public class KorisnikBean implements Serializable{
         Object rez = session.getNamedQuery("Korisnik.findByKorisni\u010dkoIme").setParameter("korisni\u010dkoIme", prijavaKorisnickoIme).uniqueResult();
         if (rez!=null) {
             System.out.println("Pronađen korisnik " + rez);
-            korisnik=(Korisnik)rez; //ovde ga i stavlja u bean
+            korisnik=(Korisnik)rez;
             //Da li koristiti varchar za lozinke?
             System.out.println(Arrays.toString(korisnik.getLozinka())+", "+Arrays.toString(prijavaLozinka.getBytes()));
             if (Arrays.equals(korisnik.getLozinka(),prijavaLozinka.getBytes())) {
-                adresa = "loginTemp";
+                adresa = korisnik.getTip();
             } else {
                 System.out.println("Pogrešna lozinka");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Neispravni podaci",null));

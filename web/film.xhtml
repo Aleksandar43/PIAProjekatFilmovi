@@ -41,11 +41,7 @@
             </p:column>
             <p:column><f:facet name="header">Vreme</f:facet>
                 <h:outputText value="#{p.vreme}">
-                    <f:convertDateTime pattern="dd.MM.yyyy."/>
-                </h:outputText>
-                ,
-                <h:outputText value="#{p.vreme}">
-                    <f:convertDateTime pattern="HH:mm"/>
+                    <f:convertDateTime pattern="dd.MM.yyyy. HH:mm"/>
                 </h:outputText>
             </p:column>
             <p:column><f:facet name="header">Cena</f:facet>
@@ -65,14 +61,14 @@
                 <h:panelGrid columns="2">
                     Za projekciju:
                     <p:selectOneMenu id="rezProj" value="#{rezervacijaBean.idProjekcije}">
-                        <p:ajax listener="#{rezervacijaBean.promeniBrojUlaznica}" update="rezForma brulOneMenu abcde"/>
+                        <p:ajax listener="#{rezervacijaBean.promeniBrojUlaznica}" update="rezForma :brulOneMenu abcde brulItems"/>
                         <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{rezervacijaBean.sveProjekcije}" var="p" itemLabel="#{p}" itemValue="#{p.id}"/>
                     </p:selectOneMenu>
                     Broj ulaznica:
                     <p:selectOneMenu id="brulOneMenu" value="#{rezervacijaBean.brojUlaznicaZaProjekciju}">
                         <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
-                        <f:selectItems value="#{rezervacijaBean.brUl}"/>
+                        <f:selectItems id="brulItems" value="#{rezervacijaBean.brUl}"/>
                     </p:selectOneMenu>
                     <p:commandButton value="Rezerviši"/><p:commandButton value="Otkaži" onclick="#{rezervacijaBean.setVidljivostForme(false)}" update="rezForma"/>
                 </h:panelGrid>

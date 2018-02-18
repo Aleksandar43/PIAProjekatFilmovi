@@ -11,13 +11,20 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import piaprojekat.HibernateUtil;
 import piaprojekat.entiteti.Festival;
+import piaprojekat.entiteti.Film;
+import piaprojekat.entiteti.Projekcija;
 
 @ManagedBean
 @RequestScoped
 public class PretragaBean {
+
     private String imeFestivala;
-    private Date datumOd,datumDo;
-    private List<Festival> listaFestivala=new ArrayList<>();
+    private Date datumOd, datumDo;
+    private List<Festival> listaFestivala = new ArrayList<>();
+    private String originalniNazivFilma;
+    private int tipPretrage=0;
+    private List<Projekcija> listaProjekcijaFilma;
+
     public PretragaBean() {
     }
 
@@ -52,19 +59,74 @@ public class PretragaBean {
     public void setListaFestivala(List<Festival> listaFestivala) {
         this.listaFestivala = listaFestivala;
     }
-    
-    public void pretraga(){
+
+    public String getOriginalniNazivFilma() {
+        return originalniNazivFilma;
+    }
+
+    public void setOriginalniNazivFilma(String originalniNazivFilma) {
+        this.originalniNazivFilma = originalniNazivFilma;
+    }
+
+    public int getTipPretrage() {
+        return tipPretrage;
+    }
+
+    public void setTipPretrage(int tipPretrage) {
+        this.tipPretrage = tipPretrage;
+    }
+
+    public List<Projekcija> getListaProjekcijaFilma() {
+        return listaProjekcijaFilma;
+    }
+
+    public void setListaProjekcijaFilma(List<Projekcija> listaProjekcijaFilma) {
+        this.listaProjekcijaFilma = listaProjekcijaFilma;
+    }
+
+    public void pretraga() {
+        tipPretrage=1;
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<Festival> lista = session.getNamedQuery("Festival.findAll").list();
-        listaFestivala=new ArrayList<>();
-        for(Festival f:lista){
-            if(!f.getDatumKraja().before(Calendar.getInstance().getTime()) //za zadatak, malo čudno
+        listaFestivala = new ArrayList<>();
+        for (Festival f : lista) {
+            if (!f.getDatumKraja().before(Calendar.getInstance().getTime()) //za zadatak, malo čudno
                     && f.getNaziv().toLowerCase().contains(imeFestivala.toLowerCase())
-                    && (datumOd==null || datumOd.before(f.getDatumPočetka()))
-                    && (datumDo==null || datumDo.after(f.getDatumKraja()))) listaFestivala.add(f);
+                    && (datumOd == null || datumOd.before(f.getDatumPočetka()))
+                    && (datumDo == null || datumDo.after(f.getDatumKraja()))) {
+                listaFestivala.add(f);
+            }
         }
         session.close();
+    }
+
+    /*Alternativno: ista funkcija sa čitanjem parametra*/
+    
+    public void pretragaKodKorisnika() {
+        if (originalniNazivFilma == null || originalniNazivFilma.equals("")) pretraga();
+        else {
+            tipPretrage=2;
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            List<Projekcija> lista;
+            List<Film> filmovi = session.getNamedQuery("Film.findAll").list();
+            listaProjekcijaFilma=new ArrayList<>();
+            for (Film film : filmovi) {
+                if (film.getNazivOriginal().toLowerCase().contains(originalniNazivFilma.toLowerCase())) {
+                    lista = film.getProjekcijaList();
+                    for (Projekcija p : lista) {
+                        if(p.getIdFilma().getNazivOriginal().toLowerCase().contains(originalniNazivFilma.toLowerCase())
+                                && p.getIdFestivala().getNaziv().toLowerCase().contains(imeFestivala.toLowerCase())
+                                && (datumOd == null || datumOd.before(p.getIdFestivala().getDatumPočetka()))
+                                && (datumDo == null || datumDo.after(p.getIdFestivala().getDatumKraja())))
+                            listaProjekcijaFilma.add(p);
+                    }
+                }
+            }
+            session.close();
+        }
     }
 }
