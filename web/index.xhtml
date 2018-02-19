@@ -81,7 +81,7 @@
                 Ime: <p:inputText value="#{pretragaBean.imeFestivala}"/>
                 Datum od: <p:calendar showOn="button" pattern="dd.MM.yyyy." value="#{pretragaBean.datumOd}"/>
                 Datum do: <p:calendar showOn="button" pattern="dd.MM.yyyy." value="#{pretragaBean.datumDo}"/>
-                <p:commandButton value="Pretraži" actionListener="#{pretragaBean.pretraga()}" update="k">
+                <p:commandButton value="Pretraži" actionListener="#{pretragaBean.pretragaNaslovna()}" update="k">
                     <f:ajax render="tabelaFestivala"/>
                 </p:commandButton>
             </h:panelGrid>

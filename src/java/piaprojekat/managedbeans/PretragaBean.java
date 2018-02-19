@@ -86,7 +86,7 @@ public class PretragaBean implements Serializable{
         this.listaProjekcijaFilma = listaProjekcijaFilma;
     }
 
-    public void pretraga() {
+    public void pretragaNaslovna() {
         tipPretrage=1;
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
@@ -106,8 +106,25 @@ public class PretragaBean implements Serializable{
 
     /*Alternativno: ista funkcija sa čitanjem parametra*/
     
+    public void pretragaFestivala() {
+        tipPretrage=1;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Festival> lista = session.getNamedQuery("Festival.findAll").list();
+        listaFestivala = new ArrayList<>();
+        for (Festival f : lista) {
+            if (f.getNaziv().toLowerCase().contains(imeFestivala.toLowerCase())
+                    && (datumOd == null || datumOd.before(f.getDatumPočetka()))
+                    && (datumDo == null || datumDo.after(f.getDatumKraja()))) {
+                listaFestivala.add(f);
+            }
+        }
+        session.close();
+    }
+    
     public void pretragaKodKorisnika() {
-        if (originalniNazivFilma == null || originalniNazivFilma.equals("")) pretraga();
+        if (originalniNazivFilma == null || originalniNazivFilma.equals("")) pretragaFestivala();
         else {
             tipPretrage=2;
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
