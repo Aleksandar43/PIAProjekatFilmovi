@@ -58,10 +58,10 @@
         
             <h:form rendered="#{rezervacijaBean.vidljivostForme}" id="rezForma">
                 Maks. ulaznica: <h:outputText value="#{rezervacijaBean.maksBrojUlaznica}" id="abcde"/>
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="2" rendered="#{rezervacijaBean.vidljivostForme}">
                     Za projekciju:
                     <p:selectOneMenu id="rezProj" value="#{rezervacijaBean.idProjekcije}">
-                        <p:ajax listener="#{rezervacijaBean.promeniBrojUlaznica}" update="rezForma :brulOneMenu abcde brulItems"/>
+                        <p:ajax listener="#{rezervacijaBean.promeniBrojUlaznica}" update="rezForma brulOneMenu abcde brulItems"/>
                         <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{rezervacijaBean.sveProjekcije}" var="p" itemLabel="#{p}" itemValue="#{p.id}"/>
                     </p:selectOneMenu>

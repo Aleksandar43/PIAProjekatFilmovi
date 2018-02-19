@@ -30,7 +30,7 @@ public class FestivalBean {
     
     public String otvoriStranicuFestivala(){
         String adresa=null;
-        String idFestival = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idFestival");
+        String idFestival = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idFestivala");
         if(idFestival==null){
             //ERROR
             //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Neispravni podaci",null));

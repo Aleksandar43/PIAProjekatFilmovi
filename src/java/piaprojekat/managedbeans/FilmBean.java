@@ -33,7 +33,7 @@ public class FilmBean implements Serializable{
     
     public String otvoriStranicuFilma(){
         String adresa=null;
-        String idFilm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idFilm");
+        String idFilm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idFilma");
         if(idFilm==null){
             //ERROR
             //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Neispravni podaci",null));

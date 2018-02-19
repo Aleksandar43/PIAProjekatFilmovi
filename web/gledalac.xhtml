@@ -20,7 +20,9 @@
             <h:panelGrid id="k">
                 <p:dataTable value="#{pretragaBean.listaFestivala}" var="f" id="tabelaFestivala" paginator="true" rendered="#{pretragaBean.tipPretrage==1}">
                     <p:column headerText="Festival">
-                        #{f.naziv}
+                        <h:commandLink value="#{f.naziv}" action="#{festivalBean.otvoriStranicuFestivala()}">
+                            <f:param name="idFestivala" value="#{f.id}"/>
+                        </h:commandLink>
                     </p:column>
                     <p:column headerText="Datum početka">
                         <h:outputText value="#{f.datumPočetka}"><f:convertDateTime pattern="dd.MM.yyyy."/></h:outputText>
@@ -34,10 +36,14 @@
                 </p:dataTable>
                 <p:dataTable value="#{pretragaBean.listaProjekcijaFilma}" var="p" id="tabelaProjekcija" paginator="true" rendered="#{pretragaBean.tipPretrage==2}">
                     <p:column headerText="Film">
-                        #{p.idFilma.nazivOriginal}
+                        <h:commandLink value="#{p.idFilma.nazivOriginal}" action="#{filmBean.otvoriStranicuFilma()}">
+                            <f:param name="idFilma" value="#{p.idFilma.id}"/>
+                        </h:commandLink>
                     </p:column>
                     <p:column headerText="Festival">
-                        #{p.idFestivala.naziv}
+                        <h:commandLink value="#{p.idFestivala.naziv}" action="#{festivalBean.otvoriStranicuFestivala()}">
+                            <f:param name="idFestivala" value="#{p.idFestivala.id}"/>
+                        </h:commandLink>
                     </p:column>
                     <p:column headerText="Vreme projekcije">
                         <h:outputText value="#{p.vreme}"><f:convertDateTime pattern="dd.MM.yyyy. HH:mm"/></h:outputText>

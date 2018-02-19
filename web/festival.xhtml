@@ -69,17 +69,17 @@
                 
                 geocoder = new google.maps.Geocoder();
                 var markerInfo;
-                <c:forEach items="#{festivalBean.festival.projekcijaList}" var="p">
-                    markerInfo="#{p.idLokacije.naziv}";
-                    geocoder.geocode( { 'address': "#{p.idLokacije.naziv}"}, function(results, status){
+                <c:forEach items="#{festivalBean.festival.lokacijaCollection}" var="p">
+                    markerInfo="#{p.naziv}";
+                    geocoder.geocode( { 'address': "#{p.naziv}"}, function(results, status){
                         if (status == 'OK') {
                             //map.setCenter(results[0].geometry.location);
                             marker = new google.maps.Marker({
                                 map: map,
                                 position: results[0].geometry.location,
                             });
-                            marker.info="#{p.idLokacije.naziv}";
-                            console.log("{p.idLokacije.naziv}: "+marker.info);
+                            marker.info="#{p.naziv}";
+                            console.log("{p.naziv}: "+marker.info);
                             marker.infoWindow=new google.maps.InfoWindow({content: marker.info});
                             google.maps.event.addListener(marker, 'click', (function (marker) {
                                 return function () {
