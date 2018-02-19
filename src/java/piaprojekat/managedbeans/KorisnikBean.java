@@ -79,4 +79,8 @@ public class KorisnikBean implements Serializable{
         korisnik=null;
         return "index";
     }
+    
+    public String vratiSe(){
+        return korisnik.getTip();
+    }
 }

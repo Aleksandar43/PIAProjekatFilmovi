@@ -52,10 +52,6 @@
             </p:column>-->
         </p:dataTable>
         <p:commandButton value="Rezerviši" onclick="#{rezervacijaBean.setVidljivostForme(true)}" update="rezForma"/>
-        
-        link ka početnom ekranu
-        
-        
             <h:form rendered="#{rezervacijaBean.vidljivostForme}" id="rezForma">
                 Maks. ulaznica: <h:outputText value="#{rezervacijaBean.maksBrojUlaznica}" id="abcde"/>
                 <h:panelGrid columns="2" rendered="#{rezervacijaBean.vidljivostForme}">
@@ -73,6 +69,7 @@
                     <p:commandButton value="Rezerviši"/><p:commandButton value="Otkaži" onclick="#{rezervacijaBean.setVidljivostForme(false)}" update="rezForma"/>
                 </h:panelGrid>
             </h:form>
+        <h:form><p:commandLink value="Nazad na poočetnu stranu" action="#{korisnikBean.vratiSe()}"/></h:form>
     </h:body>
 </html>
 

@@ -1,6 +1,7 @@
 /* */
 package piaprojekat.managedbeans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +18,7 @@ import piaprojekat.entiteti.Projekcija;
 
 @ManagedBean
 @ViewScoped
-public class PretragaBean {
+public class PretragaBean implements Serializable{
 
     private String imeFestivala;
     private Date datumOd, datumDo;

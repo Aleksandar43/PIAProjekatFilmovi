@@ -31,10 +31,13 @@
                     <f:convertDateTime pattern="HH:mm"/>
                 </h:outputText>
         </p:dataList>
+        <h2>Lokacije</h2>
         <h:panelGroup id="map" layout="block" style="width: 100%; height: 500px;">
             <!-- p:gmap problem sa zoom-om -->
         </h:panelGroup>
-            <h:outputScript>
+        <h:form><p:commandLink value="Nazad na poočetnu stranu" action="#{korisnikBean.vratiSe()}"/></h:form>
+        
+        <h:outputScript>
             function initMap() {
                 window.map = new google.maps.Map(document.getElementById('map'), {
                     mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -99,7 +102,6 @@
         <script async="async" defer="defer"
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqU70l7209vVeq8qlVZxrNGtCMsOqdRXs&amp;callback=initMap">
         </script>
-        link ka početnom ekranu
     </h:body>
 </html>
 
