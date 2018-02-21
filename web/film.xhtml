@@ -27,7 +27,7 @@
                 Link 2: <h:outputLink value="#{filmBean.film.linkRT}">#{filmBean.film.linkRT}</h:outputLink>
             </c:if>
         </h:panelGrid>
-        <p:galleria value="#{filmBean.film.slikaList}" var="s" panelWidth="300" panelHeight="200">
+        <p:galleria value="#{filmBean.film.slikaList}" var="s" panelWidth="300" panelHeight="200" rendered="#{filmBean.film.slikaList.size()>0}">
             <p:graphicImage url="#{s.putanja}" width="300px"/>
         </p:galleria>
         <p:media value="#{filmBean.film.linkYoutube}" width="400px" height="300px" player="flash" rendered="#{filmBean.film.linkYoutube!=null}"/>
@@ -47,13 +47,9 @@
             <p:column><f:facet name="header">Cena</f:facet>
                 #{p.cena}
             </p:column>
-<!--            <p:column><f:facet name="header">Rezervisanje</f:facet>
-                
-            </p:column>-->
         </p:dataTable>
-<!--        <p:commandButton value="Rezerviši" onclick="#{rezervacijaBean.setVidljivostForme(true)}" update="rezForma"/>-->
             <h:form rendered="#{rezervacijaBean.vidljivostForme}" id="rezForma">
-                <h:panelGrid columns="2" rendered="#{rezervacijaBean.vidljivostForme}">
+                <h:panelGrid columns="2" rendered="#{rezervacijaBean.vidljivostForme}" id="grid">
                     Za projekciju:
                     <p:selectOneMenu id="rezProj" value="#{rezervacijaBean.idProjekcije}">
 <!--                        <p:ajax listener="#{rezervacijaBean.promeniBrojUlaznica}" update="brulOneMenu"/>-->
@@ -65,11 +61,19 @@
                         <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
                         <f:selectItems id="brulItems" value="#{rezervacijaBean.brUl}"/>
                     </p:selectOneMenu>
-                    <p:commandButton value="Rezerviši" action="#{rezervacijaBean.rezervisi()}"/>
+                    <p:commandButton id="rezDugme" value="Rezerviši" action="#{rezervacijaBean.rezervisi()}" oncomplete="PF('rezervisanoDialog').show();" update=":dialog"/>
                 </h:panelGrid>
             </h:form>
         <h:form><p:commandLink value="Nazad na poočetnu stranu" action="#{korisnikBean.vratiSe()}"/></h:form>
         <p:growl autoUpdate="true" id="growl"/>
+        <p:dialog widgetVar="rezervisanoDialog" modal="true" id="dialog">
+            <h:panelGrid columns="1" style="align-content: center" id="dialogGrid">
+                <h:outputText value="Kod za plaćanje:" style="align-content: center"/>
+                <h:outputText value="#{rezervacijaBean.kod}" style="font-size: 150%;align-content: center"/>
+                <h:outputText value="Vreme rezervacije: #{rezervacijaBean.vremeRezervacijeFormatirano}" style="align-content: center"/>
+                <h:form><h:commandButton value="OK" onclick="PF('rezervisanoDialog').hide();" style="align-content: center"/></h:form>
+            </h:panelGrid>
+        </p:dialog>
     </h:body>
 </html>
 

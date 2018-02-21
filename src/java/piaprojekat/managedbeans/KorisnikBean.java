@@ -61,8 +61,12 @@ public class KorisnikBean implements Serializable{
             //Da li koristiti varchar za lozinke?
             System.out.println(Arrays.toString(korisnik.getLozinka())+", "+Arrays.toString(prijavaLozinka.getBytes()));
             if (Arrays.equals(korisnik.getLozinka(),prijavaLozinka.getBytes())) {
-                adresa = korisnik.getTip();
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("korisnik", korisnik);
+                if(korisnik.getOdobren()==1){
+                    adresa = korisnik.getTip();
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("korisnik", korisnik);
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Zahtev za registraciju nije prihvaćen","Molimo vas da sačekate da administrator prihvati vašu registraciju."));
+                }
             } else {
                 System.out.println("Pogrešna lozinka");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Neispravni podaci",null));

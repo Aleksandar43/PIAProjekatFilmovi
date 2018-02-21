@@ -6,6 +6,7 @@
 package piaprojekat.managedbeans;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,7 +17,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import piaprojekat.HibernateUtil;
@@ -30,7 +33,7 @@ import piaprojekat.entiteti.Rezervacija;
  * @author Aleksandar
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class RezervacijaBean implements Serializable{
     private int maksBrojUlaznica=20;
     private Projekcija projekcija=null;
@@ -39,6 +42,7 @@ public class RezervacijaBean implements Serializable{
     private boolean vidljivostForme;
     private List<Integer> brojUlaznica;
     private String kod;
+    private Date vremeRezervacije=new Date();
     public RezervacijaBean() {
     }
 
@@ -121,7 +125,19 @@ public class RezervacijaBean implements Serializable{
     public void setKod(String kod) {
         this.kod = kod;
     }
+
+    public Date getVremeRezervacije() {
+        return vremeRezervacije;
+    }
+
+    public void setVremeRezervacije(Date vremeRezervacije) {
+        this.vremeRezervacije = vremeRezervacije;
+    }
     
+    public String getVremeRezervacijeFormatirano() {
+        return new SimpleDateFormat("dd.MM.yyyy. hh:mm").format(vremeRezervacije);
+    }
+
     public List<Projekcija> getSveProjekcije(){
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
@@ -145,7 +161,8 @@ public class RezervacijaBean implements Serializable{
         Korisnik korisnik = (Korisnik) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("korisnik");
         novaRezervacija.setKorisnik(korisnik);
         novaRezervacija.setBrojUlaznica(brojUlaznicaZaProjekciju);
-        novaRezervacija.setVremeRezervacije(new Date());
+        vremeRezervacije=new Date();
+        novaRezervacija.setVremeRezervacije(vremeRezervacije);
         kod=new String();
         for (int i = 0; i < 10; i++) {
             char c = (char) ((int) (Math.random() * 26) + 'A');
@@ -236,5 +253,47 @@ public class RezervacijaBean implements Serializable{
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is not selected."); 
              
         FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }
+    
+    private String hello = "Hello World";
+    private String notSet = "not set";
+
+    public void doAction(ActionEvent evt)
+    {
+        notSet = hello;
+    }
+
+    /**
+     * @return the hello
+     */
+    public String getHello()
+    {
+        return hello;
+    }
+
+    /**
+     * @return the notSet
+     */
+    public String getNotSet()
+    {
+        return notSet;
+    }
+
+    /**
+     * @param hello
+     *          the hello to set
+     */
+    public void setHello(String hello)
+    {
+        this.hello = hello;
+    }
+
+    /**
+     * @param notSet
+     *          the notSet to set
+     */
+    public void setNotSet(String notSet)
+    {
+        this.notSet = notSet;
     }
 }
