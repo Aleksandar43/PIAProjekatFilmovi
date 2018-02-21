@@ -62,6 +62,7 @@ public class KorisnikBean implements Serializable{
             System.out.println(Arrays.toString(korisnik.getLozinka())+", "+Arrays.toString(prijavaLozinka.getBytes()));
             if (Arrays.equals(korisnik.getLozinka(),prijavaLozinka.getBytes())) {
                 adresa = korisnik.getTip();
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("korisnik", korisnik);
             } else {
                 System.out.println("Pogrešna lozinka");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Neispravni podaci",null));

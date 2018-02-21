@@ -7,34 +7,38 @@ package piaprojekat.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import piaprojekat.HibernateUtil;
-import piaprojekat.entiteti.Festival;
+import piaprojekat.entiteti.Film;
+import piaprojekat.entiteti.Korisnik;
 import piaprojekat.entiteti.Projekcija;
+import piaprojekat.entiteti.Rezervacija;
 
 /**
  *
  * @author Aleksandar
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class RezervacijaBean implements Serializable{
-    private int maksBrojUlaznica=22;
+    private int maksBrojUlaznica=20;
     private Projekcija projekcija=null;
     private int idProjekcije=0;
     private int brojUlaznicaZaProjekciju=0; //!!!
     private boolean vidljivostForme;
     private List<Integer> brojUlaznica;
+    private String kod;
     public RezervacijaBean() {
     }
 
@@ -109,15 +113,50 @@ public class RezervacijaBean implements Serializable{
         for(int i=0;i<maksBrojUlaznica;i++) x.add(i+1);
         return x;
     }
+
+    public String getKod() {
+        return kod;
+    }
+
+    public void setKod(String kod) {
+        this.kod = kod;
+    }
     
     public List<Projekcija> getSveProjekcije(){
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<Projekcija> lista;
+        List<Projekcija> lista,lista2=new ArrayList<>();
+        Film film = (Film) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("trenutniFilm");
         lista=session.getNamedQuery("Projekcija.findAll").list();
+        for(Projekcija p:lista){
+            if(Objects.equals(p.getIdFilma().getId(), film.getId())) lista2.add(p);
+        }
         session.close();
-        return lista;
+        return lista2;
+    }
+    
+    public String rezervisi(){
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Rezervacija novaRezervacija=new Rezervacija();
+        novaRezervacija.setIdProjekcije(projekcija);
+        Korisnik korisnik = (Korisnik) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("korisnik");
+        novaRezervacija.setKorisnik(korisnik);
+        novaRezervacija.setBrojUlaznica(brojUlaznicaZaProjekciju);
+        novaRezervacija.setVremeRezervacije(new Date());
+        kod=new String();
+        for (int i = 0; i < 10; i++) {
+            char c = (char) ((int) (Math.random() * 26) + 'A');
+            kod+=c;
+        }
+        novaRezervacija.setKod(kod);
+        session.save(novaRezervacija);
+        session.getTransaction().commit();
+        session.close();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Rezervacija uspešna",null));
+        return null;
     }
     
     private Map<String,Map<String,String>> data = new HashMap<String, Map<String,String>>();

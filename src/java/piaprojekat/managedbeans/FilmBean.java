@@ -45,6 +45,7 @@ public class FilmBean implements Serializable{
         session.beginTransaction();
         film = (Film) session.getNamedQuery("Film.findById").setParameter("id", id).uniqueResult();
         System.out.println("otvoriStranicuFilma(): film="+film);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("trenutniFilm", film);
         session.close();
         return "film";
     }

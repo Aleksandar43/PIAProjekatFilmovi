@@ -2,6 +2,7 @@
 package piaprojekat.entiteti;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -152,7 +153,8 @@ public class Projekcija implements Serializable {
 
     @Override
     public String toString() {
-        return "piaprojekat.entiteti.Projekcija[ id=" + id + " ]";
+        String vremeFormatirano = new SimpleDateFormat("dd.MM.yyyy. hh:mm").format(vreme);
+        return idFestivala.getNaziv()+", "+vremeFormatirano;
     }
 
     public int getCena() {

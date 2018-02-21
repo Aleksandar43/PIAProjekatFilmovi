@@ -51,13 +51,12 @@
                 
             </p:column>-->
         </p:dataTable>
-        <p:commandButton value="Rezerviši" onclick="#{rezervacijaBean.setVidljivostForme(true)}" update="rezForma"/>
+<!--        <p:commandButton value="Rezerviši" onclick="#{rezervacijaBean.setVidljivostForme(true)}" update="rezForma"/>-->
             <h:form rendered="#{rezervacijaBean.vidljivostForme}" id="rezForma">
-                Maks. ulaznica: <h:outputText value="#{rezervacijaBean.maksBrojUlaznica}" id="abcde"/>
                 <h:panelGrid columns="2" rendered="#{rezervacijaBean.vidljivostForme}">
                     Za projekciju:
                     <p:selectOneMenu id="rezProj" value="#{rezervacijaBean.idProjekcije}">
-                        <p:ajax listener="#{rezervacijaBean.promeniBrojUlaznica}" update="rezForma brulOneMenu abcde brulItems"/>
+<!--                        <p:ajax listener="#{rezervacijaBean.promeniBrojUlaznica}" update="brulOneMenu"/>-->
                         <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{rezervacijaBean.sveProjekcije}" var="p" itemLabel="#{p}" itemValue="#{p.id}"/>
                     </p:selectOneMenu>
@@ -66,10 +65,11 @@
                         <f:selectItem itemLabel="Izaberi" itemValue="" noSelectionOption="true"/>
                         <f:selectItems id="brulItems" value="#{rezervacijaBean.brUl}"/>
                     </p:selectOneMenu>
-                    <p:commandButton value="Rezerviši"/><p:commandButton value="Otkaži" onclick="#{rezervacijaBean.setVidljivostForme(false)}" update="rezForma"/>
+                    <p:commandButton value="Rezerviši" action="#{rezervacijaBean.rezervisi()}"/>
                 </h:panelGrid>
             </h:form>
         <h:form><p:commandLink value="Nazad na poočetnu stranu" action="#{korisnikBean.vratiSe()}"/></h:form>
+        <p:growl autoUpdate="true" id="growl"/>
     </h:body>
 </html>
 
