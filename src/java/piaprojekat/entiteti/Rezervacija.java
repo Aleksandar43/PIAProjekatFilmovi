@@ -154,4 +154,8 @@ public class Rezervacija implements Serializable {
         return "piaprojekat.entiteti.Rezervacija[ id=" + id + " ]";
     }
     
+    public int getIznos(){
+        return brojUlaznica*idProjekcije.getCena();
+    }
+    
 }
