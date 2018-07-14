@@ -1,0 +1,6 @@
+JSF 2.2
+Primefaces 5.0
+MySQL JDBC Driver
+EclipseLink (JPA 2.1)
+Hibernate 4.3.x(JPA2.1)
+JSTL 1.2.1
